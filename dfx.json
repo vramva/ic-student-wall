@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "studentWall_backend": {
+      "main": "src/studentWall_backend/main.mo",
+      "type": "motoko"
+    },
+    "studentWall_frontend": {
+      "dependencies": [
+        "studentWall_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/studentWall_frontend/src/index.html"
+      },
+      "source": [
+        "src/studentWall_frontend/assets",
+        "dist/studentWall_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
