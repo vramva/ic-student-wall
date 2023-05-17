@@ -3,22 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>studentWall</title>
+    <title>IC Student Wall</title>
     <base href="/" />
     <link rel="icon" href="favicon.ico" />
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <link type="text/css" rel="stylesheet" href="main.css" />
   </head>
   <body>
     <main>
-      <img src="logo2.svg" alt="DFINITY logo" />
+      <h1><b>Welcome to IC Student Wall</b></h1>
       <br />
       <br />
-      <form action="#">
-        <label for="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting"></section>
+      <div class="dashboardContainer">
+        <div id="principalId"></div>
+        <div id="username"></div>
+        <button id="logout" class="btn">Logout</button>
+      </div>
+        <form action="#">
+          <div class="loginContainer">
+            <label id="userLabel"><b>User Name</b></label>
+            <input type="text" name="Uname" id="name" placeholder="Username">
+            </br>
+            <button id="login" name="log">Login with Internet Identity</button>
+          </div>
+        </form>
+      <div id="topContainer">
+        <button id="writeMsg" class="btn" style="display: none">Write Message</button>
+        <div id="textareaContainer">
+          <textarea id="textarea" style="display: none;">...</textarea>
+          <button id="post" class="btn" style="display: none;">Post</button>          
+        </div>
+      </div>
+      <section id="wall"></section>
     </main>
+    <br />
+    <br />
+    <br />
+    <div class="logo">
+      <img src="logo2.svg" alt="DFINITY logo" />
+    </div>
   </body>
 </html>

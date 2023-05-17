@@ -1,7 +1,29 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Inter';
     font-size: 1.5rem;
+    background: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%); 
 }
+
+h1 {
+    text-align: center;
+    font-size: 54px;
+    color: #ffa807;
+    font-family: Courier New;
+    text-shadow: 0px 0px 0 rgb(250,163,2),
+                 1px 1px 0 rgb(245,158,0),
+                 2px 2px 0 rgb(240,153,0),
+                 3px 3px 0 rgb(235,148,0),
+                 4px 4px 0 rgb(230,143,0),
+                 5px 5px 0 rgb(225,138,0),
+                 6px 6px 0 rgb(220,133,0),
+                 7px 7px 0 rgb(215,128,0),
+                 8px 8px 0 rgb(210,123,0),
+                 9px 9px 0 rgb(205,118,0),
+                 10px 10px  0 rgb(200,113,0),
+                 11px 11px 10px rgba(0,0,0,0.6),
+                 11px 11px 1px rgba(0,0,0,0.5),
+                 0px 0px 10px rgba(0,0,0,.2);
+ }
 
 img {
     max-width: 50vw;
@@ -20,18 +42,171 @@ form {
     align-items: baseline;
 }
 
-button[type="submit"] {
-    padding: 5px 20px;
-    margin: 10px auto;
-    float: right;
-}
-
-#greeting {
-    margin: 10px auto;
-    padding: 10px 60px;
-    border: 1px solid #222;
-}
-
-#greeting:empty {
+textarea {
     display: none;
+    width: 50%;
+    height: 150px;
+    padding: 12px 20px;
+    background-color: #43A499;
+    color: #FFFFFF;
+    font-size: 16px;
+    resize: none;
+    -webkit-box-shadow: 3px 3px 3px 3px #ccc; 
+  box-shadow: 5px 5px 5px 5px #ccc;
+}
+
+.dashboardContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#topContainer {
+    padding: 3rem 20rem;
+    padding-bottom: 0;
+}
+
+#principalId {
+    margin-right: auto;
+}
+
+#username {
+    color: coral;
+}
+
+#principalId, #username {
+    padding: 14px 20px;
+
+}
+
+.loginContainer {
+    border: 3px solid #f1f1f1;
+    padding: 1rem;
+}
+
+#textareaContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+#textareaContainer #post {
+    margin-left: 1rem;
+    margin-top: 0;
+    height: 45px;
+    width: 80px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+#login {
+    width: 100%;
+}
+
+#login:hover {
+    opacity: 0.8;
+  }
+
+.postContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 2rem 20rem;
+    }
+    
+.card {
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      width: 20%;
+      border-radius: 5px;
+    }
+    
+.card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    
+.postarea {
+        width: 80%;
+        padding: 2rem;
+        background-color: #43A499;
+        color: #FFFFFF;
+        font-size: 16px;
+        resize: none;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      border-radius: 5px;
+    }
+    
+#avatar {
+      border-radius: 5px 5px 0 0;
+    }
+    
+.container {
+      padding: 2px 16px;
+    }
+
+.logo {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .loginContainer{
+    width: 382px;
+    overflow: hidden;
+    margin: auto;
+    margin: 20 0 0 450px;
+    padding: 80px;
+    background: #23463f;
+    border-radius: 15px ;
+
+}
+
+h2{
+text-align: center;
+color: #277582;
+padding: 20px;
+}
+label{
+color: #08ffd1;
+font-size: 17px;
+}
+#name{
+width: 300px;
+height: 30px;
+border: none;
+border-radius: 3px;
+padding-left: 8px;
+}
+
+#login{
+width: 300px;
+height: 30px;
+border: none;
+border-radius: 17px;
+padding-left: 7px;
+color: blue;
+}
+span{
+color: white;
+font-size: 17px;
+}
+a{
+float: right;
+background-color: grey;
+}
+
+#wall {
+    margin-top: 0;
 }
