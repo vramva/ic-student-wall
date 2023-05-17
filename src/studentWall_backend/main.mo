@@ -21,7 +21,9 @@ actor {
         creator : Principal;
         username : Text;
     };
-    var messageId = 0;  
+    stable var adminList = ["ivqkb-ech4a-oxnje-cfkia-sunfd-tjtji-slxpo-7l5zf-x67vb-l2nox-7qe",
+                            "uaxuk-6c7a4-rmwuh-qoq5a-d4fak-ttum4-zkxnj-ilstk-fxtxd-ogrsj-cae"];
+    stable var messageId = 0;  
     var wall = HashMap.HashMap<Nat, Message>(0, Nat.equal, Hash.hash);
     private stable var wallEntries : [(Nat, Message)] = [];
     private stable var wallSize = 0;
@@ -70,12 +72,18 @@ actor {
 
  
     //Delete a specific message by ID
-    public shared func deleteMessage(messageId: Nat) : async Result.Result<(), Text> {
+    public shared (message) func deleteMessage(messageId: Nat) : async Result.Result<(), Text> {
+        let caller = message.caller;
         let msg = wall.get(messageId);
         switch (msg) {
                 case null   return #err("Message not found");
-                case (?msg) return #ok(wall.delete(messageId));
-        }
+                case (?msg) {
+                    if (isAdmin(Principal.toText(caller))) {
+                    return #ok(wall.delete(messageId));
+                    }   
+                    else return #err("User is not Admin");
+               };
+        };
     };
  
     // Voting
@@ -132,6 +140,15 @@ actor {
         };
         messagesRanked.sort(compareVotes);
         return Buffer.toArray(messagesRanked);
+    };
+
+    private func isAdmin(pid : Text) : Bool {
+        for (admin in adminList.vals()) {
+            if (pid == admin) {
+                return true;
+            }
+        };
+        return false;
     };
 
     system func preupgrade() {
