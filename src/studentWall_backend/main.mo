@@ -22,7 +22,8 @@ actor {
         username : Text;
     };
     stable var adminList = ["ivqkb-ech4a-oxnje-cfkia-sunfd-tjtji-slxpo-7l5zf-x67vb-l2nox-7qe",
-                            "uaxuk-6c7a4-rmwuh-qoq5a-d4fak-ttum4-zkxnj-ilstk-fxtxd-ogrsj-cae"];
+                            "uaxuk-6c7a4-rmwuh-qoq5a-d4fak-ttum4-zkxnj-ilstk-fxtxd-ogrsj-cae",
+                            "whhjv-xnkpj-abvma-fcuib-lkqxu-cje3g-zqeff-hr2yq-yabhq-jlcdb-4ae"];
     stable var messageId = 0;  
     var wall = HashMap.HashMap<Nat, Message>(0, Nat.equal, Hash.hash);
     private stable var wallEntries : [(Nat, Message)] = [];
@@ -31,8 +32,11 @@ actor {
     public shared (message) func writeMessage(c : Content, user : Text) : async Nat {
         let pid = message.caller;
         let msg : Message = {vote = 0; content = c; creator = pid; username = user};
-        messageId += 1;
+        while (wall.get(messageId) != null) {
+            messageId += 1;
+        };
         wall.put(messageId, msg);
+        messageId += 1;
         return messageId;
     };
 
@@ -73,15 +77,15 @@ actor {
  
     //Delete a specific message by ID
     public shared (message) func deleteMessage(messageId: Nat) : async Result.Result<(), Text> {
-        let caller = message.caller;
+        let pid = Principal.toText(message.caller);
         let msg = wall.get(messageId);
         switch (msg) {
                 case null   return #err("Message not found");
                 case (?msg) {
-                    if (isAdmin(Principal.toText(caller))) {
-                    return #ok(wall.delete(messageId));
+                    if (isAdmin(pid)) {
+                        return #ok(wall.delete(messageId));
                     }   
-                    else return #err("User is not Admin");
+                    else return #err("User " # pid # " is not admin");
                };
         };
     };
@@ -114,10 +118,11 @@ actor {
     //Get all messages
     public shared query func getAllMessages() : async [Message] {
         var messages = Buffer.Buffer<Message>(0);
-        for (key in wall.keys()) {
-            switch (wall.get(key)){
+        let last = lastKey();
+        for (i in Iter.range(0, last)) {
+            switch ((wall.get(i))) {
                 case(?msg) messages.add(msg);
-                case(_) return [];
+                case(_) ();
             }
         };
         return Buffer.toArray(messages);
@@ -149,6 +154,16 @@ actor {
             }
         };
         return false;
+    };
+    
+    private func lastKey() : Nat {
+        var id = 0;
+        for (k in wall.keys()) {
+            if (k > id) {
+                id := k;
+            }
+        };
+        return id;
     };
 
     system func preupgrade() {
