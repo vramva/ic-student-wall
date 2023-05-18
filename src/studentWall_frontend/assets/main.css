@@ -1,4 +1,5 @@
 body {
+    margin: 0;
     font-family: 'Inter';
     font-size: 1.5rem;
     background: radial-gradient(circle at 10% 20%, rgba(216, 241, 230, 0.46) 0.1%, rgba(233, 226, 226, 0.28) 90.1%); 
@@ -64,6 +65,11 @@ textarea {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    background: black;
+    color:#FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border-radius: px;
 }
 
 #topContainer {
@@ -73,6 +79,8 @@ textarea {
 
 #principalId {
     margin-right: auto;
+    font-weight: 500;
+    color: #06f09b;
 }
 
 #username {
@@ -109,8 +117,8 @@ textarea {
 
 
 .btn {
-    background-color: #04AA6D;
-    color: white;
+    background-color: #02b070;
+    color: #FFFFFF;
     padding-top: 0.625rem;
     padding-bottom: 0.625rem;
     padding-left: 1.25rem;
@@ -142,7 +150,13 @@ textarea {
 
 #login:hover {
     opacity: 0.8;
-  }
+}
+
+#logout {
+    margin-right: 20px;
+    background: rgb(189, 67, 22);
+    color: #FFFFFF;
+}
 
 .postContainer {
     display: flex;
