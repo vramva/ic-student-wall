@@ -6,7 +6,7 @@ body {
 
 h1 {
     text-align: center;
-    font-size: 54px;
+    font-size: 3rem;
     color: #ffa807;
     font-family: Courier New;
     text-shadow: 0px 0px 0 rgb(250,163,2),
@@ -25,9 +25,14 @@ h1 {
                  0px 0px 10px rgba(0,0,0,.2);
  }
 
+ h4 {
+    color: coral;
+    font-weight: 700;
+ }
+
 img {
-    max-width: 50vw;
-    max-height: 25vw;
+    max-width: 20vw;
+    max-height: 8vw;
     display: block;
     margin: auto;
 }
@@ -74,6 +79,10 @@ textarea {
     color: coral;
 }
 
+#pid {
+    font-size: 1rem;
+}
+
 #principalId, #username {
     padding: 14px 20px;
 
@@ -90,29 +99,45 @@ textarea {
 }
 
 #textareaContainer #post {
-    margin-left: 1rem;
+    margin-left: 0.875rem;
     margin-top: 0;
-    height: 45px;
-    width: 80px;
+    height: 2.8125rem;
+    width: 5rem;
     font-size: 1rem;
     text-align: center;
 }
 
+
 .btn {
     background-color: #04AA6D;
     color: white;
-    padding: 14px 20px;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-}
+    line-height: 1.5;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition-property: color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-text-decoration-color,-webkit-backdrop-filter;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    transition-duration: .5s;
+  }
 
 .btn:hover {
     opacity: 0.8;
 }
 
 #login {
-    width: 100%;
+    width: 300px;
+    height: 30px;
+    border: none;
+    border-radius: 17px;
+    padding-left: 7px;
+    background: coral;
+    color: #FFFFFF;
 }
 
 #login:hover {
@@ -141,7 +166,7 @@ textarea {
         padding: 2rem;
         background-color: #43A499;
         color: #FFFFFF;
-        font-size: 16px;
+        font-size: 1rem;
         resize: none;
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
       border-radius: 5px;
@@ -190,14 +215,6 @@ border-radius: 3px;
 padding-left: 8px;
 }
 
-#login{
-width: 300px;
-height: 30px;
-border: none;
-border-radius: 17px;
-padding-left: 7px;
-color: blue;
-}
 span{
 color: white;
 font-size: 17px;

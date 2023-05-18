@@ -139,8 +139,8 @@ function loadMessage(messages) {
     var html = '<div class="card">';
     html += `  <img id="avatar" src="motoko.gif" alt="Avatar" style="width:100%">`;
     html += '  <div class="container">';
-    html += `      <h4 style="color: coral"><b>${user}</b></h4> `;
-    html += `      <p>Principal Id: ${pid}</p>`;
+    html += `      <h4>${user}</h4> `;
+    html += `      <p id="pid">${pid}</p>`;
     html += `  </div>`;
     html += `</div>`;
     html += `<div class="postarea">${m}</div>`;
