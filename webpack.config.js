@@ -88,8 +88,8 @@ module.exports = {
         },
       },
     },
-    static: path.resolve(__dirname, "src", frontendDirectory, "assets"),
-    hot: true,
+    static: path.resolve(__dirname, "src", frontendDirectory, "assets", "webfonts"),
+    
     watchFiles: [path.resolve(__dirname, "src", frontendDirectory)],
     liveReload: true,
   },

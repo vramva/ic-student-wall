@@ -128,15 +128,25 @@ async function getMessages() {
   loadMessage(messagesBuffer);
 }
 
-function loadMessage(messages) {
-  for (let msg of messages) {
+function loadMessage(messageData) {
+  for (let data of messageData) {
+    let msg = data.message;
     let user = msg.username;
     let pid = msg.creator;
     let m = parseContent(msg.content);
     //var html = `<div>User: ${user}  Principal Id: ${pid}  Message: ${m}</div>`;
     var div = document.createElement('div');
     div.className = `postContainer`;
-    var html = '<div class="card">';
+    var html = `<div class="action-bar">`;
+    html += `  <div class="votebox">`;
+    html += `    <div class="up vote"></div>`;
+    html += `    <div class="num">0</div>`;
+    html += `    <div class="down vote"></div>`;
+    html += `  </div>`;
+    html += `  <button class="update"><i class="fas fa-pen"></i></button>`;
+    html += `  <button class="delete"><i class="far fa-trash-alt"></i></button>`;
+    html += `</div>`;
+    html += '<div class="card">';
     html += `  <img id="avatar" src="motoko.gif" alt="Avatar" style="width:100%">`;
     html += '  <div class="container">';
     html += `      <h4>${user}</h4> `;

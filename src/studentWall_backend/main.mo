@@ -21,13 +21,21 @@ actor {
         creator : Principal;
         username : Text;
     };
+    type MessageData = {
+        id : Text;
+        voteCheck : Text;
+        message : Message;
+    };
     stable var adminList = ["ivqkb-ech4a-oxnje-cfkia-sunfd-tjtji-slxpo-7l5zf-x67vb-l2nox-7qe",
                             "uaxuk-6c7a4-rmwuh-qoq5a-d4fak-ttum4-zkxnj-ilstk-fxtxd-ogrsj-cae",
                             "whhjv-xnkpj-abvma-fcuib-lkqxu-cje3g-zqeff-hr2yq-yabhq-jlcdb-4ae"];
     stable var messageId = 0;  
     var wall = HashMap.HashMap<Nat, Message>(0, Nat.equal, Hash.hash);
+    var allVotes = HashMap.HashMap<Text, Text>(0, Text.equal, Text.hash);
     private stable var wallEntries : [(Nat, Message)] = [];
+    private stable var votesEntries : [(Text, Text)] = [];
     private stable var wallSize = 0;
+
     // Add a new message to the wall
     public shared (message) func writeMessage(c : Content, user : Text) : async Nat {
         let pid = message.caller;
@@ -116,12 +124,21 @@ actor {
     }; 
 
     //Get all messages
-    public shared query func getAllMessages() : async [Message] {
-        var messages = Buffer.Buffer<Message>(0);
+    public shared query func getAllMessages() : async [MessageData] {
+        var messages = Buffer.Buffer<MessageData>(0);
         let last = lastKey();
         for (i in Iter.range(0, last)) {
             switch ((wall.get(i))) {
-                case(?msg) messages.add(msg);
+                case(?msg) {
+                    let idString = Int.toText(i);
+                    let key = idString # ":" # Principal.toText(msg.creator);
+                    var data : MessageData = { id = ""; voteCheck = ""; message = msg};
+                    switch (allVotes.get(key)) {
+                        case(?vote) data := {id = idString; voteCheck = vote; message = msg};
+                        case(_) data := {id = idString; voteCheck = ""; message = msg};
+                    };
+                    messages.add(data);
+                };
                 case(_) ();
             }
         };
@@ -169,10 +186,12 @@ actor {
     system func preupgrade() {
         wallEntries := Iter.toArray(wall.entries());
         wallSize := wall.size(); 
+        votesEntries := Iter.toArray(allVotes.entries());
     };
 
     system func postupgrade() {
         wall := HashMap.fromIter<Nat, Message>(wallEntries.vals(), wallSize, Nat.equal, Hash.hash);
+        allVotes := HashMap.fromIter<Text, Text>(votesEntries.vals(), wallSize, Text.equal, Text.hash);
     }
 }
 
