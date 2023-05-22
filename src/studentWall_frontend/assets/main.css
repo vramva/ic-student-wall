@@ -61,6 +61,11 @@ textarea {
   box-shadow: 5px 5px 5px 5px #ccc;
 }
 
+i {
+    pointer-events: none;
+    
+}
+
 .dashboardContainer {
     display: flex;
     flex-direction: row;

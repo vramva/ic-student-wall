@@ -21,22 +21,6 @@ async function init() {
 
 document.addEventListener("DOMContentLoaded", ready);
 
-/* document.querySelectorAll('.update').forEach(updateBtn => {
-  updateBtn.addEventListener('click', event => { */
-/*     let post = nthParent(event.target, 2);
-    let message = post.querySelector(".postarea").innerText;
-    messageId = parseInt(post.id, 10);
-  
-    document.getElementById("textarea").value = message;
-    document.getElementById("textarea").style.display = "flex";
-    document.getElementById("textarea").style.transition = "width 2s, height 2s, background-color 2s";
-    document.getElementById("post").style.display = "flex";
-    document.getElementById("post").style.transition = "width 2s, height 2s, background-color 2s"; */
-/*     document.getElementById("writeMsg").scrollIntoView();
-  });
-});
- */
-
 document.body.addEventListener( 'click', function (event) {
   if ( event.target.className == 'update' ) {
     updateMsg(event);
