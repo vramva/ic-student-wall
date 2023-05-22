@@ -90,7 +90,7 @@ actor {
         switch (msg) {
                 case null   return #err("Message not found");
                 case (?msg) {
-                    if (isAdmin(pid)) {
+                    if ((message.caller == msg.creator) or (isAdmin(pid))) {
                         return #ok(wall.delete(messageId));
                     }   
                     else return #err("User " # pid # " is not admin");

@@ -41,6 +41,19 @@ function updateMsg(event) {
   document.getElementById("topContainer").scrollIntoView();
 }
 
+document.body.addEventListener( 'click', function (event) {
+  if ( event.target.className == 'delete' ) {
+    deleteMsg(event);
+  }
+});
+
+async function deleteMsg(event) {
+  let post = nthParent(event.target, 2);
+  let id = parseInt(post.id, 10);
+  let result = await studentWall_backend.deleteMessage(id);
+  post.style.display = "none";
+  post.style.transition = "width 2s, height 2s, background-color 2s";
+}
 
 document.getElementById("logout").addEventListener("click", async (e) => {
   principalId = "";
