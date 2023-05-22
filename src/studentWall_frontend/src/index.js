@@ -5,6 +5,9 @@ import { Actor } from "@dfinity/agent";
 let authClient = null;
 let principalId = localStorage.getItem('principalId') || "";
 let username = localStorage.getItem('username') || "anon";
+/* let delArr = document.querySelectorAll(".delete");
+ */
+let messageId = -1;
 
 async function init() {
     authClient = await AuthClient.create();
@@ -18,6 +21,43 @@ async function init() {
 
 document.addEventListener("DOMContentLoaded", ready);
 
+/* document.querySelectorAll('.update').forEach(updateBtn => {
+  updateBtn.addEventListener('click', event => { */
+/*     let post = nthParent(event.target, 2);
+    let message = post.querySelector(".postarea").innerText;
+    messageId = parseInt(post.id, 10);
+  
+    document.getElementById("textarea").value = message;
+    document.getElementById("textarea").style.display = "flex";
+    document.getElementById("textarea").style.transition = "width 2s, height 2s, background-color 2s";
+    document.getElementById("post").style.display = "flex";
+    document.getElementById("post").style.transition = "width 2s, height 2s, background-color 2s"; */
+/*     document.getElementById("writeMsg").scrollIntoView();
+  });
+});
+ */
+
+document.body.addEventListener( 'click', function (event) {
+  if ( event.target.className == 'update' ) {
+    updateMsg(event);
+  }
+});
+
+function updateMsg(event) {
+  let post = nthParent(event.target, 2);
+  let message = post.querySelector(".postarea").innerText;
+  messageId = parseInt(post.id, 10);
+
+  document.getElementById("textarea").value = message;
+  document.getElementById("textarea").style.display = "flex";
+  document.getElementById("textarea").style.transition = "width 2s, height 2s, background-color 2s";
+  document.getElementById("post").style.display = "flex";
+  document.getElementById("post").style.transition = "width 2s, height 2s, background-color 2s";
+
+  document.getElementById("topContainer").scrollIntoView();
+}
+
+
 document.getElementById("logout").addEventListener("click", async (e) => {
   principalId = "";
   localStorage.setItem('principalId', principalId);
@@ -26,6 +66,7 @@ document.getElementById("logout").addEventListener("click", async (e) => {
   document.getElementById("textarea").style.display = "none";
   showDashboard();
   showLogin(true);
+  toggleButtons();
 });
 
 document.getElementById("writeMsg").addEventListener("click", async (e) => {
@@ -48,23 +89,34 @@ document.getElementById("textarea").addEventListener("focus", async (e) => {
   }
 });
 
-document.getElementById("post").addEventListener("click", async (e) => {
+document.getElementById("post").addEventListener("click", (e) => {
+  postMessage(e);
+});
 
+async function postMessage(e) {
   const button = document.getElementById("post");
   button.setAttribute("disabled", true);
-  
   // send message to backend
   const message = document.getElementById("textarea").value;
   let content = {Text : message};
-  let msgId = await studentWall_backend.writeMessage(content, username);
+  if (messageId < 0) {
+    let msgId = await studentWall_backend.writeMessage(content, username);
+  }
+  else {
+    let result = await studentWall_backend.updateMessage(messageId, content);
+      let id = messageId;
+      messageId = -1;
+      let postarea = document.getElementById(id).querySelector(".postarea");
+      postarea.innerText = message;
+      document.getElementById(id).scrollIntoView();
+  }
   
   button.removeAttribute("disabled");
 
   document.getElementById("textarea").value = "";
   document.getElementById("post").style.display = "none";
   document.getElementById("textarea").style.display = "none";
-});
-
+}
 
 
 
@@ -105,6 +157,7 @@ function handleSuccess() {
   document.getElementById("principalId").innerText = `Principal Id: ${principalId}`;
   document.getElementById("username").innerText = `${username}`;
   document.getElementById("writeMsg").style.display = "block";
+  toggleButtons();
 
   Actor.agentOf(studentWall_backend).replaceIdentity(authClient.getIdentity());
 }
@@ -134,17 +187,20 @@ function loadMessage(messageData) {
     let user = msg.username;
     let pid = msg.creator;
     let m = parseContent(msg.content);
-    //var html = `<div>User: ${user}  Principal Id: ${pid}  Message: ${m}</div>`;
+    let display = principalId == pid ? "inherit" : "none";
     var div = document.createElement('div');
     div.className = `postContainer`;
+    div.setAttribute("id", data.id);
+    div.setAttribute("href", `#message-${data.id}`);
     var html = `<div class="action-bar">`;
     html += `  <div class="votebox">`;
     html += `    <div class="up vote"></div>`;
     html += `    <div class="num">0</div>`;
     html += `    <div class="down vote"></div>`;
+    html += `    <div id="vote-${data.id}">${data.voteCheck}</div>`
     html += `  </div>`;
-    html += `  <button class="update"><i class="fas fa-pen"></i></button>`;
-    html += `  <button class="delete"><i class="far fa-trash-alt"></i></button>`;
+    html += `  <button class="update" style="display: ${display}"><i class="fas fa-pen"></i></button>`;
+    html += `  <button class="delete" style="display: ${display}"><i class="far fa-trash-alt"></i></button>`;
     html += `</div>`;
     html += '<div class="card">';
     html += `  <img id="avatar" src="motoko.gif" alt="Avatar" style="width:100%">`;
@@ -192,7 +248,36 @@ function showDashboard() {
   }
 }
 
+function toggleButtons() {
+  let update = document.getElementsByClassName("update");
+  let del = document.getElementsByClassName("delete");
+  for (var i = 0; i < update.length; i++) {
+    var updateBtn = update[i];
+    var post = nthParent(updateBtn, 2);
+    var msgCreator = post.querySelector("#pid").innerText; 
+    if (principalId == msgCreator) {
+      updateBtn.style.display = "inherit";
+    }
+    else updateBtn.style.display = "none";
+  }
+  for (var i = 0; i < del.length; i++) {
+    var delBtn = del[i];
+    var post = nthParent(delBtn, 2);
+    var msgCreator = post.querySelector("#pid").innerText; 
+    if (principalId == msgCreator) {
+      delBtn.style.display = "inherit";
+    }
+    else delBtn.style.display = "none";
+  }
 
+}
+
+//Utility functions
+function nthParent(element, n) {
+  while(n-- && element)  
+    element = element.parentNode;
+  return element;
+}
 
 
 /* document.getElementById("msgBtn").addEventListener("click", async (e) => {

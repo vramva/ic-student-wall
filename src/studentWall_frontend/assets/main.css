@@ -73,7 +73,7 @@ textarea {
 }
 
 #topContainer {
-    padding: 3rem 20rem;
+    padding: 3rem 31.3rem;
     padding-bottom: 0;
 }
 
@@ -161,7 +161,8 @@ textarea {
 .postContainer {
     display: flex;
     flex-direction: row;
-    padding: 2rem 20rem;
+    padding: 2rem 28rem;
+    max-width: 60rem;
     }
     
 .action-bar {
